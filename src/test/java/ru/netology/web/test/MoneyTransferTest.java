@@ -13,6 +13,7 @@ import ru.netology.web.page.MoneyTransferPage;
 import org.junit.jupiter.api.Nested;
 
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -126,10 +127,13 @@ class MoneyTransferTest {
       var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
       verificationPage.validVerify(verificationCode);
       var dashBoardPage = new DashboardPage();
+      int expBalance1 = dashBoardPage.getBalance(DataHelper.validCard1().getDataTestId());
+      int expBalance2 = dashBoardPage.getBalance(DataHelper.validCard2().getDataTestId());
       var moneyTransferPage = dashBoardPage.secondCard();
       var idCard = DataHelper.validCard2();
       moneyTransferPage.transfer(transferSum, idCard.getCardNumber());
-
+      assertEquals(expBalance1, dashBoardPage.getBalance(DataHelper.validCard1().getDataTestId()));
+      assertEquals(expBalance2, dashBoardPage.getBalance(DataHelper.validCard2().getDataTestId()));
   }
 }
 
