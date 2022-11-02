@@ -154,25 +154,6 @@ class MoneyTransferTest {
     }
 
     @Test
-    void shouldTransferNegativeSum() {
-      int transferSum = -1;
-      var LoginPage = new LoginPage();
-      var authInfo = DataHelper.getAuthInfo();
-      var verificationPage = LoginPage.validLogin(authInfo);
-      var verificationCode = DataHelper.getVerificationCodeFor(authInfo);
-      verificationPage.validVerify(verificationCode);
-      var dashBoardPage = new DashboardPage();
-      int expBalance1 = dashBoardPage.getBalance(DataHelper.validCard1().getDataTestId());
-      int expBalance2 = dashBoardPage.getBalance(DataHelper.validCard2().getDataTestId());
-      var moneyTransferPage = dashBoardPage.secondCard();
-      var idCard = DataHelper.validCard1();
-      moneyTransferPage.transfer(transferSum, idCard.getCardNumber());
-      moneyTransferPage.error();
-      assertEquals(expBalance1, dashBoardPage.getBalance(DataHelper.validCard1().getDataTestId()));
-      assertEquals(expBalance2, dashBoardPage.getBalance(DataHelper.validCard2().getDataTestId()));
-    }
-
-    @Test
     void shouldTransferMoreMoneyThanAccountHas() {
       int transferSum = 11000;
       var LoginPage = new LoginPage();
